@@ -1,24 +1,30 @@
-codename: Update Documentation
+name: Update Documentation
 on:
   pull_request:
     branches:
       - master
 jobs:
-  update-doc:
+  update-theneo:
     name: Update Theneo Documentation
     runs-on: ubuntu-latest
     steps:
-      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
-      - name: Checkout
-        uses: actions/checkout@v4
+      # - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+      # - name: Checkout
+      - uses: actions/checkout@v4
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "18"
       - name: Update Documentation on Theneo
+        # run: |
+        #   npm install -g @theneo/cli@latest
+        #   theneo login --token e41cc714-a947-4b20-b09f-62975cb139a6
+        #   ls -al
+        #   theneo project list
+        #   theneo project import --project test-bitbucket --workspace racheal-test-theneo --projectVersion v1 --publish --file doc/api.yaml --import-type overwrite
         uses: Theneo-Inc/api-documentation@1.8.0
         with:
-          FILE_PATH: doc/api.yml
+          FILE_PATH: doc/api.yaml
 
           PROJECT_SLUG: test-automation
           WORKSPACE_SLUG: racheal-test-theneo
@@ -27,8 +33,8 @@ jobs:
 
           AUTO_PUBLISH: true
 
-          IMPORT_OPTION: merge
-          PARAMETER_DESCRIPTION_MERGE_STRATEGY: keep_new
-          SECTION_DESCRIPTION_MERGE_STRATEGY: keep_old
+          IMPORT_OPTION: overwrite
+          # PARAMETER_DESCRIPTION_MERGE_STRATEGY: keep_new
+          # SECTION_DESCRIPTION_MERGE_STRATEGY: keep_old
 
           INCLUDE_GITHUB_METADATA: true
